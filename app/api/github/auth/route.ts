@@ -3,8 +3,7 @@ import { requireAuth } from "@/lib/auth";
 
 export async function GET() {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
 
   if (!user) {
     return NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL));

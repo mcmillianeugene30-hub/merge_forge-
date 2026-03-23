@@ -10,8 +10,7 @@ export async function POST(
 ) {
   try {
     const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
     const { id: forgeId } = await params;
     const supabase = await createClient();
     const admin = await getSupabaseAdmin();

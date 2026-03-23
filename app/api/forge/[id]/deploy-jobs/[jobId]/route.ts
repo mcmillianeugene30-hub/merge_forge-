@@ -8,8 +8,7 @@ export async function GET(
 ) {
   try {
     const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
     const { id: forgeId, jobId } = await params;
     const supabase = await createClient();
 

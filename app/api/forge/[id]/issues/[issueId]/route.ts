@@ -8,8 +8,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; issueId: string }> }
 ) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -67,8 +66,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string; issueId: string }> }
 ) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -4,8 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export async function POST() {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

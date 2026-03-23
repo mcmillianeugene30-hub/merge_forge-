@@ -6,8 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   const { id: forgeId } = await params;
   const body = await req.json();
   const { sessionId, goal, repoName, projectName, isPrivate } = body;
@@ -45,8 +44,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   const { id: forgeId } = await params;
   const { searchParams } = new URL(req.url);
   const runId = searchParams.get('runId');

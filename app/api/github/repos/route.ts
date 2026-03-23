@@ -4,8 +4,7 @@ import { listAllRepos } from "@/lib/github";
 
 export async function GET() {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

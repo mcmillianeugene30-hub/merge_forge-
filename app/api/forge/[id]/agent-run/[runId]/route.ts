@@ -6,8 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string; runId: string }> }) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   const { id: forgeId, runId } = await params;
   const admin = await getSupabaseAdmin();
 
@@ -43,8 +42,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string; runId: string }> }) {
   const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
   const { id: _forgeId, runId } = await params;
   const admin = await getSupabaseAdmin();
   await admin.from('agent_runs').update({ status: 'cancelled' }).eq('id', runId);

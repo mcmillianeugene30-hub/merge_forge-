@@ -8,8 +8,7 @@ export async function GET(
 ) {
   try {
     const userOrRes = await requireAuth();
-  if (userOrRes instanceof NextResponse) return userOrRes;
-  const user = userOrRes;
+  if (userOrRes instanceof Response) return userOrRes;
     const { id: forgeId } = await params;
     const { searchParams } = new URL(req.url);
     const sessionId = searchParams.get("sessionId");
