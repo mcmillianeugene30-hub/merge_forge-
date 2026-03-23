@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import type { User } from '@supabase/supabase-js';
 import { requireAuth } from '@/lib/auth';
 import { getSupabaseAdmin } from '@/lib/supabase/admin';
 
@@ -7,6 +8,7 @@ export const dynamic = 'force-dynamic';
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string; runId: string }> }) {
   const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
   const { id: forgeId, runId } = await params;
   const admin = await getSupabaseAdmin();
 
@@ -43,6 +45,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string; runId: string }> }) {
   const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
   const { id: _forgeId, runId } = await params;
   const admin = await getSupabaseAdmin();
   await admin.from('agent_runs').update({ status: 'cancelled' }).eq('id', runId);

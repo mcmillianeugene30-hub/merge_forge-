@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import type { User } from '@supabase/supabase-js';
 import { requireAuth } from "@/lib/auth";
 
 export async function GET() {
   const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
 
   if (!user) {
     return NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL));

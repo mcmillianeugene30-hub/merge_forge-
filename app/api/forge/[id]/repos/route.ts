@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { User } from '@supabase/supabase-js';
 import { requireAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
@@ -8,6 +9,7 @@ export async function GET(
 ) {
   const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -33,6 +35,7 @@ export async function POST(
 ) {
   const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

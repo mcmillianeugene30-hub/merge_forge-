@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { User } from '@supabase/supabase-js';
 import { requireAuth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
@@ -11,6 +12,7 @@ export async function POST(
   try {
     const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
     const { id: forgeId } = await params;
     const supabase = await createClient();
     const admin = await getSupabaseAdmin();

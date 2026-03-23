@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { User } from '@supabase/supabase-js';
 import { requireAuth } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
@@ -9,6 +10,7 @@ export async function GET(
   try {
     const userOrRes = await requireAuth();
   if (userOrRes instanceof Response) return userOrRes;
+  const user = userOrRes as User;
     const { id: forgeId } = await params;
     const supabase = await getSupabaseAdmin();
     const { searchParams } = new URL(req.url);
